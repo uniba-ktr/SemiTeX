@@ -1,0 +1,132 @@
+%===============================================================================
+% Zweck: KTR-Seminar-Vorlage in Anlehung an G. Wirtz, Lehrstuhl Praktische Informatik
+%===============================================================================
+%===============================================================================
+% zentrale Layout-Angaben und Befehle
+%===============================================================================
+%
+% \usepackage{german}
+\usepackage[ngerman,german]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%
+\ifpdf
+\usepackage[pdftex,bookmarksopen,bookmarksnumbered,pdfborder=0]{hyperref}
+\usepackage[pdftex]{graphicx}
+\pdfcompresslevel=9
+\else
+\usepackage{url}
+\usepackage[dvips]{graphicx}
+\fi
+%\usepackage[dvips]{rotating}
+%
+% ausf\"{u}hrlichere Fehlermeldungen
+\errorcontextlines=999
+%
+% Page-Layout: A4 aus Header
+% Alternative
+%\setlength\headheight{14pt}
+%\setlength\topmargin{-15,4mm}
+%\setlength\oddsidemargin{-0,4mm}
+%\setlength\evensidemargin{-0,4mm}
+%\setlength\textwidth{160mm}
+%\setlength\textheight{252mm}
+%
+% Absatzeinstellungen
+\setlength\parindent{0mm}
+\setlength\parskip{2ex}
+%
+% Anweisung zur Erstellung der Titelseite
+% #1 = Name des Seminars
+% #2 = Name der Ausarbeitung
+% #3 = Autor
+% #4 = Betreuer
+% #5 = Semester, z.B. WS 2007/08
+\renewcommand{\maketitle}[5] {
+  \begin{titlepage}
+  \centering
+    \begin{minipage}[t]{16cm}
+      \hfill
+      \begin{minipage}{12cm}
+        \centering
+        Otto-Friedrich-Universit\"at Bamberg
+        \\[12pt]
+        {\Large Professur f\"ur Informatik,
+        \\
+        insbesondere Kommunikationsdienste, Telekommunikationsdienste und Rechnernetze}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{3cm}
+        \includegraphics[height=28mm]{config/images/logo} %height=26mm
+      \end{minipage}
+    \end{minipage}\\[70pt]%[50pt]
+   % 
+    {\Large\bf Ausarbeitung des KTR-Seminars}
+    \\[36pt]
+   % oder: {\LARGE Ausarbeitung des KTR-Seminars}\\[12pt]
+    {\LARGE #1}\\[80pt]
+    {\Large\bf Thema:}\\[36pt]
+    {\LARGE\bf #2}\\
+    \vfill
+    \begin{minipage}{\textwidth}
+      \center
+      Vorgelegt von:\\
+      {\Large #3\\[18pt]}
+      Betreuer: #4\\[12pt]
+      Bamberg, #5
+    \end{minipage}
+  \end{titlepage}
+}
+%
+% Erstellung von Abk\"{u}rzungsverzeichnis
+\newcommand{\abbrev}[2]{#1 & #2\\}
+\newcommand{\abkuerzungen}{
+\section*{Abk\"urzungen}
+\hspace{2ex}
+\begin{tabular}{ll}
+\input{abkuerzungen.tex}
+\end{tabular}
+}
+%
+% Einbindung eines Bildes mit angegebener Breite
+% #1 = label f\"{u}r \ref-Verweise
+% #2 = Name des Bildes ohne Endung relativ zu Bilder-Verzeichnis
+% #3 = Beschriftung
+% #4 = Breite des Bildes im Dokument in cm
+\newcommand{\bildw}[4]{%
+  \begin{figure}[htb]%
+    \centering
+    \includegraphics[width=#4cm]{Bilder/#2}%
+    \vskip -0.3cm%
+    \caption{#3}%
+    \vskip -0,2cm%
+    \label{#1}%
+  \end{figure}%
+}
+%
+% Einbindung eines Bildes mit Seitenbreite
+% #1 = label f\"{u}r \ref-Verweise
+% #2 = Name des Bildes ohne Endung relativ zu Bilder-Verzeichnis
+% #3 = Beschriftung
+\newcommand{\bild}[3]{%
+  \begin{figure}[htb]%
+    \centering%
+    \includegraphics[width=\textwidth]{Bilder/#2}%
+    \vskip -0.3cm%
+    \caption{#3}%
+    \vskip -0,2cm%
+    \label{#1}%
+  \end{figure}%
+}
+%
+\numberwithin{equation}{section}
+%
+%===============================================================================
+% zentrale Layout-Angaben und Befehle
+%===============================================================================
+%
