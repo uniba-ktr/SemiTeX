@@ -10,7 +10,7 @@ Edit the <code>\newcommand{\lang}{ngerman}</code> command to setup the language 
 * <code>ngerman</code> and
 * <code>english</code>.
 
-Furthermore, edit the config/metainfo.tex file to include
+Furthermore, edit the <code>config/metainfo.tex</code> file to include
 * your name and 
 * the submission date.
 
