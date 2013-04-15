@@ -6,9 +6,9 @@ A LaTeX template for the seminar submissions
 Setup
 -----
 
-Edit the `\lang` command to setup the language You write your submission in. Possible options are 
-* `ngerman` and
-* `english`.
+Edit the <code>\newcommand{\lang}{ngerman}</code> command to setup the language You write your submission in. Possible options are 
+* <code>ngerman</code> and
+* <code>english</code>.
 
 Furthermore, edit the config/metainfo.tex file to include
 * your name and 
@@ -19,5 +19,5 @@ Compiling the Source Code
 
 Use `pdflatex`, `makeindex` and `bibtex` to generate a readable document.
 If You use texmaker, you can include the following command to automatically compile the sources: 
-`pdflatex -synctex=1 -interaction=nonstopmode %.tex | bibtex % | makeindex %.nlo -s nomencl.ist -o %.nls | pdflatex -synctex=1 -interaction=nonstopmode %.tex | pdflatex -synctex=1 -interaction=nonstopmode %.tex`
+<code>pdflatex -synctex=1 -interaction=nonstopmode %.tex | bibtex % | makeindex %.nlo -s nomencl.ist -o %.nls | pdflatex -synctex=1 -interaction=nonstopmode %.tex | pdflatex -synctex=1 -interaction=nonstopmode %.tex</code>
 
