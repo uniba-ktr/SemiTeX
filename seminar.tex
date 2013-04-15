@@ -1,49 +1,47 @@
 %===============================================================================
 % Zweck:    KTR-Seminar-Vorlage
 % Erstellt: 16.10.2007
+% Updated:  15.04.2013
 % Autor:    U.K. / M.G.
 %===============================================================================
 
 %===============================================================================
-% Zum Kompilieren pdflatex und bibtex ausführen
+% Zum Kompilieren pdflatex und bibtex ausführen.
+%	Konfiguration: in texmaker unter Benutzer -> Benutzerbefehle einen neuen Befehl anlegen: pdflatex -synctex=1 -interaction=nonstopmode %.tex | bibtex % | makeindex %.nlo -s nomencl.ist -o %.nls | pdflatex -synctex=1 -interaction=nonstopmode %.tex | pdflatex -synctex=1 -interaction=nonstopmode %.tex
+%	Entsprechende Informationen in den config/metainfo verändern
+% Zur Auswahl der Sprache im folgenden Befehl
+% ngerman für deutsch eintragen, english für Englisch.
 %===============================================================================
 
-\RequirePackage{ifpdf} \ifpdf
-\documentclass[pdftex, a4paper, 12pt]{article}
-\else
-\documentclass[a4paper, 12pt]{article}
-\fi
+% Options ngerman, english
+\newcommand{\lang}{english}
+
+\documentclass[pdftex, a4paper, 12pt, \lang]{article}
+
 %===============================================================================
 % zentrale Layout-Angaben und Befehle
 %===============================================================================
-%
+\input{config/metainfo}
 \input{config/layout}
 %===============================================================================
 % LATEX-Dokument
 %===============================================================================
-%
+
+\input{config/hyphenation}
 \begin{document}
-%
-% Titelblatt erstellen
-%
-\maketitle{Integration of Mobile Clouds and\\ Information Centric Services in\\[.5em] Next Generation Networks}
-{Title}%
-{Name des Studierenden}
-{Prof. Dr. Udo Krieger}
-{\today}
-%
-% Erstellung der Inhaltsverzeichnisse und anderer Verzeichnisse
-%
+
+\maketitle
+
 \pagenumbering{Roman}
 \setcounter{page}{2}
 %
 \tableofcontents
 \newpage
 \listoffigures
-%\newpage
-%\listoftables
-%\newpage
-%\abkuerzungen
+\newpage
+\listoftables
+\newpage
+\printnomenclature
 %===============================================================================
 % LATEX-Dokument: Kapitel laden
 %===============================================================================
@@ -55,13 +53,13 @@
 % hier einzelne Kapitel mit \input{Kapitel-File} einf\"{u}gen
 %
 \input{chapters/introduction}
-
 %
 %===============================================================================
 % LATEX-Dokument: Literaturverzeichnis
 %===============================================================================
 %
 \newpage
+\phantomsection
 % Einstellungen f\"{u}r Literaturverzeichnis
 \addcontentsline{toc}{section}{\bibname}
 

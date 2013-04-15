@@ -6,8 +6,11 @@
 %===============================================================================
 %
 % \usepackage{german}
-\usepackage[english]{babel}
-%\usepackage[latin1]{inputenc}
+\usepackage{ifthen}
+% Language Selection for Babel
+\ifthenelse{\equal{\lang}{ngerman}}{\usepackage[german, \lang]{babel}}{\usepackage[\lang]{babel}}
+
+\usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
 \usepackage[T1]{fontenc}
 \usepackage{ae}
@@ -15,14 +18,11 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 %
-\ifpdf
-\usepackage[pdftex,bookmarksopen,bookmarksnumbered,pdfborder=0]{hyperref}
+
+\usepackage[pdftitle={\@title},pdfauthor={\@author},pdftex,bookmarksopen,bookmarksnumbered,pdfborder=0]{hyperref}
 \usepackage[pdftex]{graphicx}
 \pdfcompresslevel=9
-\else
-\usepackage{url}
-\usepackage[dvips]{graphicx}
-\fi
+
 %\usepackage[dvips]{rotating}
 %
 % ausf\"{u}hrlichere Fehlermeldungen
@@ -40,25 +40,30 @@
 % Absatzeinstellungen
 \setlength\parindent{0mm}
 \setlength\parskip{2ex}
-%
-% Anweisung zur Erstellung der Titelseite
-% #1 = Name des Seminars
-% #2 = Name der Ausarbeitung
-% #3 = Autor
-% #4 = Betreuer
-% #5 = Semester, z.B. WS 2007/08
-\renewcommand{\maketitle}[5] {
+
+
+\makeatletter
+\renewcommand{\maketitle} {
   \begin{titlepage}
   \centering
     \begin{minipage}[t]{16cm}
       \hfill
       \begin{minipage}{12cm}
+      \ifthenelse{\equal{\lang}{ngerman}}{%
+        \centering
+        Otto-Friedrich-Universit\"at Bamberg
+        \\[12pt]
+        {\Large Professur f\"ur Informatik,
+        \\
+        insbesondere Kommunikationsdienste, Telekommunikationsdienste und Rechnernetze}%
+        }{%
         \centering
         Otto-Friedrich-University of Bamberg
         \\[12pt]
         {\Large Professorship for Computer Science,
         \\
-        Communication Services, Telecommunication Systems and Computer Networks}
+        Communication Services, Telecommunication Systems and Computer Networks}%
+        }
       \end{minipage}
       \hfill
       \begin{minipage}{3cm}
@@ -66,33 +71,31 @@
       \end{minipage}
     \end{minipage}\\[70pt]%[50pt]
    % 
-    {\Large\bf Seminar on}
+    {\Large\bf \ifthenelse{\equal{\lang}{ngerman}}{Ausarbeitung des KTR-Seminars}{Seminar on}}
     \\[36pt]
    % oder: {\LARGE Ausarbeitung des KTR-Seminars}\\[12pt]
-    {\LARGE #1}\\[80pt]
-    {\Large\bf Topic:}\\[36pt]
-    {\LARGE\bf #2}\\
+    {\LARGE \@title}\\[80pt]
+    {\Large\bf \ifthenelse{\equal{\lang}{ngerman}}{Thema:}{Topic:}}\\[36pt]
+    {\LARGE\bf \subtitle}\\
     \vfill
     \begin{minipage}{\textwidth}
       \center
-      Submitted by:\\
-      {\Large #3\\[18pt]}
-      Supervisor: #4\\[12pt]
-      Bamberg, #5
+      \ifthenelse{\equal{\lang}{ngerman}}{Vorgelegt von:}{Submitted by:}\\
+      {\Large \@author \\[18pt]}
+      \ifthenelse{\equal{\lang}{ngerman}}{Betreuer:}{Supervisor:} \supervisor \\[12pt]
+      Bamberg, \@date
     \end{minipage}
   \end{titlepage}
 }
+\makeatother
 %
-% Erstellung von Abk\"{u}rzungsverzeichnis
-\newcommand{\abbrev}[2]{#1 & #2\\}
-\newcommand{\abkuerzungen}{
-\section*{Abbreviations}
-\hspace{2ex}
-\begin{tabular}{ll}
-\input{abkuerzungen.tex}
-\end{tabular}
-}
-%
+\usepackage[intoc]{nomencl}
+\ifthenelse{\equal{\lang}{ngerman}}{%
+\renewcommand{\nomname}{Abkürzungsverzeichnis}}%
+{\renewcommand{\nomname}{List of Abbreviations}}
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
+\makenomenclature
+
 % Einbindung eines Bildes mit angegebener Breite
 % #1 = label f\"{u}r \ref-Verweise
 % #2 = Name des Bildes ohne Endung relativ zu Bilder-Verzeichnis
