@@ -8,7 +8,7 @@
 % \usepackage{german}
 \usepackage{ifthen}
 % Language Selection for Babel
-\ifthenelse{\equal{\lang}{ngerman}}{\usepackage[german, \lang]{babel}}{\usepackage[\lang]{babel}}
+\usepackage[\lang]{babel}
 
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
@@ -19,18 +19,17 @@
 \usepackage{amsfonts}
 %
 
-\usepackage{caption}
 
 %%   Fuer anspruchsvolle Tabellen   %%
 \usepackage{longtable, colortbl}
 \usepackage{multicol, multirow}
 
-\usepackage[pdftitle={\@title},pdfauthor={\@author},pdftex,bookmarksopen,bookmarksnumbered,pdfborder=0]{hyperref}
+\usepackage[pdftitle={\@title},pdfauthor={\@author},pdftex,bookmarksopen,bookmarksnumbered]{hyperref}
 \usepackage[pdftex]{graphicx}
 \usepackage{float}
 \usepackage{tikz}
 \usepackage{pgfplots}
-\usetikzlibrary{arrows,shapes,fit,positioning,snakes,backgrounds,shadows}
+\usetikzlibrary{arrows,shapes,fit,positioning,decorations,backgrounds,shadows}
 
 \pdfcompresslevel=9
 
