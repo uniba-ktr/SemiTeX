@@ -7,13 +7,14 @@
 \date{\today}
 
 % What is already done
-\newcommand{\semester}{\ifthenelse{\equal{\lang}{ngerman}}{Wintersemester 2014/15}{Winter Term 2014/15}}
-\title{\ifthenelse{\equal{\lang}{ngerman}}{Moderne Internet-Dienste in Software-definierten und\\ informationszentrierten Netzen der\\[.5em] n\"achsten Generation}{%
-Modern Internet Services in Software Defined and\\[.5em] Information Centric Networks of the next Generation
-}}
-\newcommand{\supervisor}{Prof. Dr. Udo Krieger}
-%\institute[shortinstitute]{Institute}
 
-%\titlegraphic{\includegraphics[width=13mm,height=13mm]{image/logo}}
-%\subject{subject}
-%\keywords{keywords}
+\newlanguagecommand{\semester}
+\addtolanguagecommand{\semester}{english}{Winter Term 2016/17}
+\addtolanguagecommand{\semester}{ngerman}{Wintersemester 2016/17}
+
+\newlanguagecommand{\ltitle}
+\addtolanguagecommand{\ltitle}{english}{Modern Internet Services in Software Defined and\\[.5em] Information Centric Networks of the next Generation}
+\addtolanguagecommand{\ltitle}{ngerman}{Moderne Internet-Dienste in Software-definierten und\\ informationszentrierten Netzen der\\[.5em] n\"achsten Generation}
+
+\title{\ltitle}
+\newcommand{\supervisor}{Prof. Dr. Udo Krieger}
