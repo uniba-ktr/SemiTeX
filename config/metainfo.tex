@@ -18,3 +18,10 @@
 
 \title{\ltitle}
 \newcommand{\supervisor}{Prof. Dr. Udo Krieger}
+
+\newif\ifgit
+\gittrue
+
+\ifgit
+  \newcommand{\keywords}{\gitAbbrevHash, \gitAuthorIsoDate, \gitAuthorName }
+\fi

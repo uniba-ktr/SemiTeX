@@ -46,8 +46,12 @@
 \newpage
 \pagenumbering{arabic}
 \setcounter{page}{1}
-
-
+%
+% to use git tagging
+%
+\ifgit
+  \input{chapters/version}
+\fi
 %
 % hier einzelne Kapitel mit \input{Kapitel-File} einf\"{u}gen
 %
