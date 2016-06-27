@@ -7,7 +7,7 @@ objects = seminar.pdf
 all: $(objects) cleanTemp
 
 $(objects): %.pdf :%.tex
-	latexmk -pdf -pdflatex="pdflatex -synctex=1" -use-make $<
+	latexmk -pdf -pdflatex="pdflatex -shell-escape -synctex=1 -interaction=nonstopmode" -use-make $<
 
 cleanTemp:
 	latexmk -c
