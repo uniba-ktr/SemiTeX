@@ -7,13 +7,21 @@
 \date{\today}
 
 % What is already done
-\newcommand{\semester}{\ifthenelse{\equal{\lang}{ngerman}}{Wintersemester 2014/15}{Winter Term 2014/15}}
-\title{\ifthenelse{\equal{\lang}{ngerman}}{Moderne Internet-Dienste in Software-definierten und\\ informationszentrierten Netzen der\\[.5em] n\"achsten Generation}{%
-Modern Internet Services in Software Defined and\\[.5em] Information Centric Networks of the next Generation
-}}
-\newcommand{\supervisor}{Prof. Dr. Udo Krieger}
-%\institute[shortinstitute]{Institute}
 
-%\titlegraphic{\includegraphics[width=13mm,height=13mm]{image/logo}}
-%\subject{subject}
-%\keywords{keywords}
+\newlanguagecommand{\semester}
+\addtolanguagecommand{\semester}{english}{Summer Term 2016}
+\addtolanguagecommand{\semester}{ngerman}{Sommersemester 2016}
+
+\newlanguagecommand{\ltitle}
+\addtolanguagecommand{\ltitle}{english}{Fog Computing in Software-Defined Networks}
+\addtolanguagecommand{\ltitle}{ngerman}{Fog Computing in Software-Defined Networks}
+
+\title{\ltitle}
+\newcommand{\supervisor}{Prof. Dr. Udo Krieger}
+
+\newif\ifgit
+\gittrue
+
+\ifgit
+  \newcommand{\gitkeys}{\gitAbbrevHash, \gitAuthorIsoDate, \gitAuthorName }
+\fi

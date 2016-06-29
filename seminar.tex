@@ -4,31 +4,25 @@
 % Updated:  27.06.2016
 % Autor:    U.K. / M.G.
 %===============================================================================
-
-%===============================================================================
-% Zum Kompilieren pdflatex und bibtex ausführen.
-% Konfiguration in texmaker: Options -> Configure Texmaker -> Quick Build -> Select Latexmk + ViewPDF
-% Entsprechende Informationen in den config/metainfo verändern
-% Zur Auswahl der Sprache im folgenden Befehl
-% ngerman für deutsch eintragen, english für Englisch.
-%===============================================================================
-
-% Options ngerman, english
-\newcommand{\lang}{ngerman}
-
-\documentclass[pdftex, journal, onecolumn, a4paper, 12pt, \lang]{IEEEtran}
-
+\documentclass[pdftex, journal, onecolumn, a4paper, 12pt]{IEEEtran}
 %===============================================================================
 % zentrale Layout-Angaben und Befehle
 %===============================================================================
-\input{config/metainfo}
-\input{config/layout}
+\input{config/commands}
+
 %===============================================================================
 % LATEX-Dokument
 %===============================================================================
-
 \input{config/hyphenation}
 \begin{document}
+  %===============================================================================
+  % Zum Kompilieren pdflatex und bibtex ausführen.
+  % Konfiguration in texmaker: Options -> Configure Texmaker -> Quick Build -> Select Latexmk + ViewPDF
+  % Entsprechende Informationen in den config/metainfo verändern
+  % Zur Auswahl der Sprache im folgenden Befehl
+  % ngerman für deutsch eintragen, english für Englisch.
+  %===============================================================================
+\selectlanguage{ngerman}
 
 \maketitle
 
@@ -52,8 +46,12 @@
 \newpage
 \pagenumbering{arabic}
 \setcounter{page}{1}
-
-
+%
+% to use git tagging
+%
+\ifgit
+  \input{chapters/version}
+\fi
 %
 % hier einzelne Kapitel mit \input{Kapitel-File} einf\"{u}gen
 %

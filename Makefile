@@ -1,7 +1,9 @@
 # Copyright 2016, Marcel Großmann <marcel.grossmann@uni-bamberg.de>
 objects = seminar.pdf
+hooks = post-checkout post-commit post-merge
+githooks = .git/hooks
 
-.PHONY: all clean
+.PHONY: all clean cleanTemp git docker
 
 # Builds and cleans latex crap
 all: $(objects) cleanTemp
@@ -16,3 +18,12 @@ cleanTemp:
 clean: cleanTemp
 	latexmk -CA
 	rm -f *.synctex.gz
+
+git: $(hooks)
+
+$(hooks):
+	cp gitinfo2-hook.txt $(githooks)/$@
+	chmod u+x $(githooks)/$@
+
+docker:
+	docker-compose run builder

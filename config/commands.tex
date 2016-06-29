@@ -4,21 +4,21 @@
 %===============================================================================
 % zentrale Layout-Angaben und Befehle
 %===============================================================================
-%
-% \usepackage{german}
-\usepackage{ifthen}
+
 % Language Selection for Babel
-\usepackage[\lang]{babel}
+\input{config/language}
+\input{config/metainfo}
 
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
 \usepackage[T1]{fontenc}
+\ifgit
+  \usepackage[mark]{gitinfo2}
+\fi
 \usepackage{ae}
 \usepackage{color}
 \usepackage{amsmath}
 \usepackage{amsfonts}
-%
-
 
 %%   Fuer anspruchsvolle Tabellen   %%
 \usepackage{longtable, colortbl}
@@ -36,57 +36,31 @@
 % Code-Hervorhebung
 % Quellcode
 \usepackage{verbatim}            % Quellcode einbinden (\verbatiminput) standardpaket
-\usepackage{moreverb} 
+\usepackage{moreverb}
 % PseudoCode
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 %\usepackage{algorithmicx}
-\floatname{algorithm}{Algorithmus}
+
+\floatname{algorithm}{\algo}
 \algrenewcommand{\algorithmiccomment}[1]{\hskip1em\textcolor{gray!60}{$\rhd$ #1}}
-\ifthenelse{\equal{\lang}{ngerman}}{%
-\renewcommand{\listalgorithmname}{Algorithmen}
-\def\algorithmautorefname{Algorithmus}
-}{%
-\renewcommand{\listalgorithmname}{List of Algorithms}
-\def\algorithmautorefname{Algorithm}
-}
+\renewcommand{\listalgorithmname}{\loa}
+\def\algorithmautorefname{\algo}
 
 
-%%   intoc zur Aufnhame des Abkuerzungs- und Symbolverzeichnisses ins Inhaltsverzeichnis  
+%%   intoc zur Aufnhame des Abkuerzungs- und Symbolverzeichnisses ins Inhaltsverzeichnis
 \usepackage[intoc]{nomencl}
 \setlength{\nomlabelwidth}{.20\hsize}
-%\renewcommand{\nomlabel}[1]{#1 \dotfill}
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
 \setlength{\nomitemsep}{-\parsep}
 \makenomenclature
-\ifthenelse{\equal{\lang}{ngerman}}{%
-\renewcommand{\nomname}{Abk\"urzungsverzeichnis}
-%\newcommand{\nomaltname}{Symbolverzeichnis}
-}{%
-\renewcommand{\nomname}{List of Abbreviations}
-%\newcommand{\nomaltname}{List of Symbols}
-}%
-%\newcommand{\nomaltpreamble}{}
-%\newcommand{\nomaltpostamble}{}
-%\newcommand{\usetwonomenclatures}{\nomenclature[\switchnomitem]{}{}}
-%\newcommand{\switchnomitem}{R}
-%\renewcommand{\nomgroup}[1]{%
-%\ifthenelse{\equal{#1}{\switchnomitem}}{\switchnomalt}{}}
-%\newcommand{\switchnomalt}{%
-%\end{thenomenclature}
-%\newpage
-%\renewcommand{\nomname}{\nomaltname}
-%\renewcommand{\nompreamble}{\nomaltpreamble}
-%\renewcommand{\nompostamble}{\nomaltpostamble}
-%\begin{thenomenclature}
-%}
 
+\renewcommand{\nomname}{\abbr}
 
 %%   Hervorhebung der Abkuerzungsbuchstaben   %%
 \usepackage[normalem]{ulem}
 \newcommand{\m}[1]{\uline{#1}}
 
-%\usepackage[dvips]{rotating}
-%
 % ausf\"{u}hrlichere Fehlermeldungen
 \errorcontextlines=999
 %
@@ -104,6 +78,7 @@
 \setlength\parskip{2ex}
 
 
+
 \makeatletter
 \renewcommand{\maketitle} {
   \begin{titlepage}
@@ -111,40 +86,28 @@
     \begin{minipage}[t]{16cm}
       \hfill
       \begin{minipage}{12cm}
-      \ifthenelse{\equal{\lang}{ngerman}}{%
-        \centering
-        Otto-Friedrich-Universit\"at Bamberg
+            \centering
+        \uni
         \\[12pt]%
-        {\Large Professur f\"ur Informatik\\[.5em]%
-        \large insbesondere Kommunikationsdienste,\\[.5em]%
-        Telekommunikationsdienste und Rechnernetze}%
-        }{%
-        \centering
-        Otto-Friedrich-University of Bamberg
-        \\[12pt]
-        {\Large Professorship for Computer Science,\\[.5em]%
-        \large Communication Services, Telecommunication\\[.5em]%
-        Systems and Computer Networks}%
-        }
+        {\Large \chair\\[.5em]%
+        \large \chairsub}%
       \end{minipage}
       \hfill
       \begin{minipage}{3cm}
         \includegraphics[height=28mm]{config/images/logo} %height=26mm
       \end{minipage}
     \end{minipage}\\[70pt]%[50pt]
-   % 
-    {\Large\bf \ifthenelse{\equal{\lang}{ngerman}}{Ausarbeitung des KTR-Seminars}{Seminar on}}
+    {\Large\bf \seminar}
     \\[36pt]
-   % oder: {\LARGE Ausarbeitung des KTR-Seminars}\\[12pt]
     {\LARGE \@title}\\[80pt]
-    {\Large\bf \ifthenelse{\equal{\lang}{ngerman}}{Thema:}{Topic:}}\\[36pt]
+    {\Large\bf \topic:}\\[36pt]
     {\LARGE\bf \subtitle}\\
     \vfill
     \begin{minipage}{\textwidth}
       \center
-      \ifthenelse{\equal{\lang}{ngerman}}{Vorgelegt von:}{Submitted by:}\\
+      \submitter:\\
       {\Large \@author \\[18pt]}
-      \ifthenelse{\equal{\lang}{ngerman}}{Betreuer:}{Supervisor:} \supervisor \\[12pt]
+      \lsupervisor: \supervisor \\[12pt]
       Bamberg, \@date\\
       \semester
     \end{minipage}
@@ -152,12 +115,6 @@
 }
 \makeatother
 %
-\usepackage[intoc]{nomencl}
-\ifthenelse{\equal{\lang}{ngerman}}{%
-\renewcommand{\nomname}{Abkürzungsverzeichnis}}%
-{\renewcommand{\nomname}{List of Abbreviations}}
-\renewcommand{\nomlabel}[1]{#1 \dotfill}
-\makenomenclature
 
 % Einbindung eines Bildes mit angegebener Breite
 % #1 = label f\"{u}r \ref-Verweise
@@ -235,4 +192,3 @@
 \end{algorithm}%
 \normalsize%
 }
-
