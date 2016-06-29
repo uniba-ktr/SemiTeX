@@ -3,10 +3,14 @@ objects = seminar.pdf
 hooks = post-checkout post-commit post-merge
 githooks = .git/hooks
 
-.PHONY: all clean cleanTemp git docker
+.PHONY: all init clean cleanTemp git docker
 
-# Builds and cleans latex crap
+.DEFAULT_GOAL := all
+
 all: $(objects) cleanTemp
+
+init: git
+	mkdir -p graphic code images content
 
 $(objects): %.pdf :%.tex
 	latexmk -pdf -pdflatex="pdflatex -shell-escape -synctex=1 -interaction=nonstopmode" -use-make $<
