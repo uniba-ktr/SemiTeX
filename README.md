@@ -22,7 +22,7 @@ Run `make init` in the cloned directory to setup submodules and versioning of yo
     * the submission date in `\date{}` and
     * the title in `\newcommand{\subtitle}{}`.
  2. Modify `\gittrue` to `\gitfalse` in `config/metainfo.tex` to disable git versioning.
- 3. Edit the `\selectlanguage{}` command in `project.tex` to setup the language you write your submission in. Possible options are
+ 3. Edit the `\selectlanguage{}` command in `seminar.tex` to setup the language you write your submission in. Possible options are
     * `ngerman`
     * `english`
 
