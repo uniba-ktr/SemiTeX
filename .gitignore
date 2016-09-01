@@ -20,3 +20,5 @@
 *.sty
 *.cls
 *.bst
+# Do not initialize twice
+.prepared

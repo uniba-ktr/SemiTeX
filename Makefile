@@ -50,8 +50,8 @@ docker:
 # Internal Targets
 
 initializegit:
-	rm -rf .git .gitmodules
-	cd $(base) &&	git init
+	test -f .prepared || rm -rf .git .gitmodules
+	test -f .prepared || cd $(base) &&	git init && touch .prepared
 
 gitmodules:
 	test -d $(meta) || git submodule add $(metaurl) $(meta)
