@@ -22,24 +22,25 @@ dockerincontainer = $(shell dirname $(shell git ls-tree --full-name --name-only 
 .DEFAULT_GOAL := $(main)
 
 # Call make prepare only once after checkout
-prepare:
-	rm -rf .git
-	cd $(base) &&	git init
+prepare: initializegit gitmodules $(hooks)
+	sed -i 's#\\newcommand\\meta.*#\\newcommand\\meta{${meta}}#g' $(main).tex
+	ln -fs $(base)/.git/gitHeadInfo.gin gitHeadLocal.gin
+	git add --all
+	git commit -m "Initialized Git Foo"
 
 # Call make init
-init: gitmodules $(hooks) $(styles) $(bibtexstyles) $(classes)
+init: $(styles) $(bibtexstyles) $(classes)
 	mkdir -p graphic code images content
-	test -f gitHeadLocal.gin || ln -s $(base)/.git/gitHeadInfo.gin gitHeadLocal.gin
-	sed -i 's#\\newcommand\\meta.*#\\newcommand\\meta{${meta}}#g' $(main).tex
+	cd $(meta) && git pull origin master
 
 # Call make [seminar]
-$(main) : $(main).tex
+$(main): $(main).tex
 	latexmk -pdf -pdflatex="pdflatex -shell-escape -synctex=1 -interaction=nonstopmode" -use-make $<
 	latexmk -c
 
 # Call make clean
 clean:
-	latexmk -CA
+	latexmk -c
 	rm -f *.synctex.gz *.bbl *.nlo *.nls *.nav *.snm
 
 # Call make docker
@@ -47,6 +48,10 @@ docker:
 	@docker run -it --rm -v $(dockerabsvol)/:/src/ -w /src unibaktr/dock-tex:jessie /bin/sh -c "cd $(dockerincontainer) && make && make clean"
 
 # Internal Targets
+
+initializegit:
+	rm -rf .git .gitmodules
+	cd $(base) &&	git init
 
 gitmodules:
 	test -d $(meta) || git submodule add $(metaurl) $(meta)
