@@ -1,11 +1,12 @@
 # Copyright 2016, Marcel Großmann <marcel.grossmann@uni-bamberg.de>
+# Adjust your base GIT directory relatively to Makefile
+base = .
+# Internal Variables - Touch & Perish
 main = seminar
-hooks = post-checkout post-commit post-merge
 styles= gitinfo2.sty gitexinfo.sty
 bibtexstyles = IEEEtran.bst
 classes = IEEEtran.cls
-# Base GIT directory relatively to Makefile
-base = .
+hooks = post-checkout post-commit post-merge
 # Folder to clone TeXMeta to, relatively to $base
 meta = $(base)/meta
 # TeXMeta location
@@ -13,28 +14,39 @@ metaurl = "https://github.com/uniba-ktr/TeXMeta.git"
 # Git hooks
 gitinfohook = $(meta)/style/gitinfo2-hook.txt
 githooks = $(base)/.git/hooks
+dockerabsvol = $(shell git rev-parse --show-toplevel)
+dockerincontainer = $(shell dirname $(shell git ls-tree --full-name --name-only HEAD Makefile))
 
-.PHONY: all init clean gitmodules docker
+.PHONY: init clean docker
 
 .DEFAULT_GOAL := $(main)
 
-$(main) : $(main).tex
-	latexmk -pdf -pdflatex="pdflatex -shell-escape -synctex=1 -interaction=nonstopmode" -use-make $<
-	latexmk -c
-	rm -f *.bbl *.nlo *.nls *.nav *.snm
+# Call make prepare only once after checkout
+prepare:
+	rm -rf .git
+	cd $(base) &&	git init
 
-clean:
-	latexmk -CA
-	rm -f *.synctex.gz
-
-inittemplate: gitmodules $(hooks) $(styles) $(bibtexstyles) $(classes)
+# Call make init
+init: gitmodules $(hooks) $(styles) $(bibtexstyles) $(classes)
 	mkdir -p graphic code images content
 	test -f gitHeadLocal.gin || ln -s $(base)/.git/gitHeadInfo.gin gitHeadLocal.gin
 	sed -i 's#\\newcommand\\meta.*#\\newcommand\\meta{${meta}}#g' $(main).tex
 
-init: inittemplate
-	sed -i '/# Stylesheets and classes only in meta directory/d' .gitignore
-	sed -i -e '/*.sty/d' -e '/*.cls/d' -e	'/*.bst/d' -e '/*.gin/d' .gitignore
+# Call make [seminar]
+$(main) : $(main).tex
+	latexmk -pdf -pdflatex="pdflatex -shell-escape -synctex=1 -interaction=nonstopmode" -use-make $<
+	latexmk -c
+
+# Call make clean
+clean:
+	latexmk -CA
+	rm -f *.synctex.gz *.bbl *.nlo *.nls *.nav *.snm
+
+# Call make docker
+docker:
+	@docker run -it --rm -v $(dockerabsvol)/:/src/ -w /src unibaktr/dock-tex:jessie /bin/sh -c "cd $(dockerincontainer) && make && make clean"
+
+# Internal Targets
 
 gitmodules:
 	test -d $(meta) || git submodule add $(metaurl) $(meta)
@@ -52,9 +64,3 @@ $(classes): %.cls : $(meta)/style/%.cls
 $(hooks):
 	cp $(gitinfohook) $(githooks)/$@
 	chmod u+x $(githooks)/$@
-
-absvol = $(shell git rev-parse --show-toplevel)
-incontainer = $(shell dirname $(shell git ls-tree --full-name --name-only HEAD Makefile))
-
-docker:
-	@docker run -it --rm -v $(absvol)/:/src/ -w /src unibaktr/dock-tex:jessie /bin/sh -c "cd $(incontainer) && make"
