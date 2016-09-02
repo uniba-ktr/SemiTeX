@@ -11,24 +11,27 @@ hooks = post-checkout post-commit post-merge
 meta = $(base)/meta
 # TeXMeta location
 metaurl = "https://github.com/uniba-ktr/TeXMeta.git"
+# Git Prepare message
+gitprepare = "Initialized Git Foo"
 # Git hooks
 gitinfohook = $(meta)/style/gitinfo2-hook.txt
 githooks = $(base)/.git/hooks
 dockerabsvol = $(shell git rev-parse --show-toplevel)
 dockerincontainer = $(shell dirname $(shell git ls-tree --full-name --name-only HEAD Makefile))
 
-.PHONY: init clean docker
+.PHONY: all alldocker prepare init clean docker
 
 .DEFAULT_GOAL := $(main)
 
 # Call make prepare only once after checkout
 prepare: initializegit gitmodules $(hooks)
-	sed -i 's#\\newcommand\\meta.*#\\newcommand\\meta{${meta}}#g' $(main).tex
-	ln -fs $(base)/.git/gitHeadInfo.gin gitHeadLocal.gin
-	git add --all
-	git commit -m "Initialized Git Foo"
+	test -f .prepared || sed -i 's#\\newcommand\\meta.*#\\newcommand\\meta{${meta}}#g' $(main).tex
+	test -f .prepared || ln -fs $(base)/.git/gitHeadInfo.gin gitHeadLocal.gin
+	test -f .prepared || git add --all
+	test -f .prepared || git commit -m $(gitprepare)
+	test -f .prepared || touch .prepared
 
-# Call make init
+# Call make init to create structure and update the meta files
 init: $(styles) $(bibtexstyles) $(classes)
 	mkdir -p graphic code images content
 	cd $(meta) && git pull origin master
@@ -46,12 +49,17 @@ clean:
 # Call make docker
 docker:
 	@docker run -it --rm -v $(dockerabsvol)/:/src/ -w /src unibaktr/dock-tex:jessie /bin/sh -c "cd $(dockerincontainer) && make && make clean"
+	chown $(UID):$(GID) $(main).pdf
+
+all: init $(main) clean
+
+alldocker: init docker
 
 # Internal Targets
 
 initializegit:
-	test -f .prepared || rm -rf .git .gitmodules
-	test -f .prepared || cd $(base) &&	git init && touch .prepared
+	test -f .prepared || rm -rf .git .gitmodules meta
+	test -f .prepared || ( cd $(base) && ( test -d .git || git init ) )
 
 gitmodules:
 	test -d $(meta) || git submodule add $(metaurl) $(meta)
