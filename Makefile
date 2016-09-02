@@ -16,6 +16,9 @@ gitprepare = "Initialized Git Foo"
 # Git hooks
 gitinfohook = $(meta)/style/gitinfo2-hook.txt
 githooks = $(base)/.git/hooks
+# Docker adjustments
+uid = $(shell id -u $$USER)
+gid = $(shell id -g $$USER)
 dockerabsvol = $(shell git rev-parse --show-toplevel)
 dockerincontainer = $(shell dirname $(shell git ls-tree --full-name --name-only HEAD Makefile))
 
@@ -49,7 +52,7 @@ clean:
 # Call make docker
 docker:
 	@docker run -it --rm -v $(dockerabsvol)/:/src/ -w /src unibaktr/dock-tex:jessie /bin/sh -c "cd $(dockerincontainer) && make && make clean"
-	chown $(UID):$(GID) $(main).pdf
+	chown $(uid):$(gid) $(main).pdf
 
 all: init $(main) clean
 
