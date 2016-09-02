@@ -20,5 +20,6 @@
 *.sty
 *.cls
 *.bst
+*.gin
 # Do not initialize twice
 .prepared
