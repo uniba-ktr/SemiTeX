@@ -10,5 +10,5 @@ deploy:
   file: seminar.pdf
   skip_cleanup: true
   on:
-    repo: uniba-ktr/ThesTeX
+    repo: uniba-ktr/SemiTeX
     tags: true
