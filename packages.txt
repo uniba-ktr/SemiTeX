@@ -21,6 +21,7 @@ multirow
 nomencl
 pgf
 pgfplots
+polynom
 relsize
 setspace
 subfig
