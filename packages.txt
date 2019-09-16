@@ -10,6 +10,7 @@ eso-pic
 etoolbox
 float
 fourier
+koma-script
 l3kernel
 l3packages
 listings
