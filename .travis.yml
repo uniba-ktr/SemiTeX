@@ -10,3 +10,4 @@ deploy:
   file: seminar.pdf
   on:
     repo: uniba-ktr/SemiTeX
+    tags: true
