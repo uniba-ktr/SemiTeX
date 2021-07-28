@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/uniba-ktr/SemiTeX.svg?branch=master)](https://travis-ci.org/uniba-ktr/SemiTeX)
+[![Build Status](https://travis-ci.com/uniba-ktr/SemiTeX.svg?branch=master)](https://travis-ci.com/uniba-ktr/SemiTeX)
 
 # SemiTeX
 
