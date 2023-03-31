@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/uniba-ktr/SemiTeX.svg?branch=master)](https://travis-ci.com/uniba-ktr/SemiTeX)
-
 # SemiTeX
 
 A LaTeX template for the seminar submissions
